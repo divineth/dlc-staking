@@ -39,6 +39,10 @@ module.exports = {
           fontFamily: theme("fontFamily.inter_reg"),
           fontSize: "11px",
         },
+        ".inter-reg-14":{
+          fontFamily: theme("fontFamily.inter_reg"),
+          fontSize: "14px",
+        },
         ".proxima-reg-17":{
           fontFamily: theme("fontFamily.inter_reg"),
           fontSize: "17px",
