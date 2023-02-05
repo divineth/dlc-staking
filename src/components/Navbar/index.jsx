@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./navbar.module.css";
 import DLCLogo from "@/assets/images/dlc-logo.svg";
 import { Popover } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
+import { shortenIfAddress, useEthers } from "@usedapp/core";
+import WalletManager from "../WalletManager";
 
 export default function Navbar() {
+  const { account } = useEthers();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  function closeModal() {
+    setIsDialogOpen(false);
+  }
+
+  function openModal() {
+    setIsDialogOpen(true);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -12,7 +25,9 @@ export default function Navbar() {
           <img src={DLCLogo.src} alt="logo" />
         </div>
         <div className={styles.nav__right}>
-          <button className={styles.connect_btn}>Connect Wallet</button>
+          <button onClick={openModal} className={styles.connect_btn}>
+            {account ? shortenIfAddress(account) : "Connect Wallet"}
+          </button>
         </div>
         <Popover className={styles.mobile__menu}>
           {({ open }) => (
@@ -39,7 +54,7 @@ export default function Navbar() {
                         }}
                         className={styles.connect_btn}
                       >
-                        {"Connect Wallet"}
+                        {account ? shortenIfAddress(account) : "Connect Wallet"}
                       </button>
                     </div>
                   </div>
@@ -49,6 +64,7 @@ export default function Navbar() {
           )}
         </Popover>
       </div>
+      <WalletManager isOpen={isDialogOpen} onCloseModal={closeModal} />
     </div>
   );
 }
