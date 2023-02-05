@@ -91,7 +91,7 @@ export default function StakeWidget() {
     if (account) {
       if (
         (balance != undefined &&
-          compareNonTokenWithToken(balance, amount, 9) == -1) ||
+          compareNonTokenWithToken(balance, amount, 9) == -1) &&
         (stakedTokens != undefined &&
           compareNonTokenWithToken(stakedTokens, amount, 9) == -1)
       ) {
