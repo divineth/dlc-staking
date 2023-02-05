@@ -19,7 +19,7 @@
 .stake__input {
   @apply rounded-3xl py-3 pl-4 pr-20;
   @apply alien-19 text-white;
-  background: url("../../assets/images/dlc-input-bg.svg") no-repeat right;
+  background: url("../../assets/images/dlc-input-bg.png") no-repeat right;
   background-size: cover;
   outline: none;
 }
