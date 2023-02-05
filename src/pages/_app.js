@@ -9,11 +9,12 @@ import {
   Localhost,
 } from "@usedapp/core";
 import { WalletConnectConnector } from "@usedapp/wallet-connect-connector";
+import { DLCDappProvider } from "@/providers/DLCProvider/DLCDappProvider";
 
 const config = {
-  readOnlyChainId: Localhost.chainId,
+  readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
-    [Localhost.chainId]: process.env.NEXT_PUBLIC_LOCALHOST_RPC_URL,
+    [Mainnet.chainId]: process.env.NEXT_PUBLIC_MAINNET_RPC_URL,
   },
   connectors: {
     metamask: new MetamaskConnector(),
@@ -25,22 +26,24 @@ const config = {
       },
     }),
   },
-  // multicallVersion: 2,
-  // multicallAddresses: {
-  //   [Mainnet.chainId]: "0x5ba1e12693dc8f9c48aad8770482f4739beed696",
-  // },
+  multicallVersion: 2,
+  multicallAddresses: {
+    [Mainnet.chainId]: "0x5ba1e12693dc8f9c48aad8770482f4739beed696",
+  },
   gasLimitBufferPercentage: 20,
   autoConnect: true,
-  // networks: [Mainnet],
+  networks: [Mainnet],
   noMetamaskDeactivate: true,
 };
 
 export default function App({ Component, pageProps }) {
   return (
     <DAppProvider config={config}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <DLCDappProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </DLCDappProvider>
     </DAppProvider>
   );
 }

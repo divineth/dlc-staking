@@ -5,9 +5,11 @@ import { Popover } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { shortenIfAddress, useEthers } from "@usedapp/core";
 import WalletManager from "../WalletManager";
+import { useDLCDapp } from "@/providers/DLCProvider/DLCDappProvider";
 
 export default function Navbar() {
   const { account } = useEthers();
+  const { isChainError } = useDLCDapp();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   function closeModal() {
@@ -22,7 +24,7 @@ export default function Navbar() {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.nav__left}>
-          <img src={DLCLogo.src} alt="logo" />
+          <img className="w-32" src={DLCLogo.src} alt="logo" />
         </div>
         <div className={styles.nav__right}>
           <button onClick={openModal} className={styles.connect_btn}>
@@ -49,9 +51,7 @@ export default function Navbar() {
                   <div className="relative grid gap-4 bg-transparent p-4">
                     <div className="flex text-white flex-col gap-4">
                       <button
-                        onClick={() => {
-                          console.log("hi");
-                        }}
+                        onClick={openModal}
                         className={styles.connect_btn}
                       >
                         {account ? shortenIfAddress(account) : "Connect Wallet"}
@@ -64,6 +64,11 @@ export default function Navbar() {
           )}
         </Popover>
       </div>
+      {isChainError && (
+        <div className="bg-red-600 text-center text-white p-1 alien-19">
+          You're connected to the wrong network. Switch to Ethereum Mainnet.
+        </div>
+      )}
       <WalletManager isOpen={isDialogOpen} onCloseModal={closeModal} />
     </div>
   );

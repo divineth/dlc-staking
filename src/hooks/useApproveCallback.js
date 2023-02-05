@@ -28,7 +28,7 @@ export function useApproveCallback(amountToApprove, spender) {
     if (!amountToApprove || !spender) return ApprovalState.UNKNOWN;
     if (!tokenAllowance) return ApprovalState.UNKNOWN;
 
-    return tokenAllowance.lt(utils.parseUnits(amountToApprove, 18))
+    return tokenAllowance.lt(utils.parseUnits(amountToApprove, 9))
       ? ApprovalState.NOT_APPROVED
       : ApprovalState.APPROVED;
   }, [amountToApprove, tokenAllowance, spender]);
@@ -38,8 +38,9 @@ export function useApproveCallback(amountToApprove, spender) {
   });
 
   const approve = () => {
-    send(spender, utils.parseUnits(amountToApprove, 18));
+    send(spender, utils.parseUnits(amountToApprove, 9));
   };
+
 
   return { approvalState, approve, state };
 }
